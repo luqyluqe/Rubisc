@@ -19,28 +19,27 @@ def file_substitute file_path
 	file=File.new file_path,"r"
 	if !file
 	    puts "Failed to read file "+file_path
-	else
-	    content=""
-	    file.each do |line|
-	        content<<line
-	    end
-	    pattern=content.match /#{@old_content}/
-	    if !pattern
-	        puts "No matching found."
+		exit
+	end
+	content=""
+	file.each do |line|
+        content<<line
+  	end
+	pattern=content.match /#{@old_content}/
+	if !pattern
+		puts "No matching found."
 		file.close
 		exit
-	    else
-	        content=content.gsub(/#{@old_content}/,@new_content)
-	    end
 	end
+  	content=content.gsub(/#{@old_content}/,@new_content)
 	file.close
 	
 	file=File.new file_path,"w"
 	if !file
 	    puts "Failed to write file "+file_path
-	else
-	    file.write content
+		exit
 	end
+	file.write content
 	file.close
 end
 
