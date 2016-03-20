@@ -3,12 +3,12 @@
 require File.join(File.dirname(__FILE__), '..', 'lib','fileutil')
 
 unless ARGV[0] and ARGV[1] and ARGV[2]
-    puts "Usage: ruby substitute.rb <path> <old_content> <new_content>"
-    puts "Example: ruby substitute.rb mydir/ hello hey"
+    puts "Usage: substitute <path> <old_content> <new_content>"
+    puts "Example: substitute mydir/ hello hey"
     exit
 end
 unless File.exist? ARGV[0]
-    puts "#{ARGV[0]} does not  exist."
+    puts "#{ARGV[0]} does not exist."
     puts "Please provide the path to the file or directory you want to manipulate."
     exit
 end
