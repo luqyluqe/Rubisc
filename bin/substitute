@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+require File.join(File.dirname(__FILE__), '..', 'lib','fileutil')
+
 unless ARGV[0] and ARGV[1] and ARGV[2]
     puts "Usage: ruby substitute.rb <path> <old_content> <new_content>"
     puts "Example: ruby substitute.rb mydir/ hello hey"
@@ -16,31 +18,16 @@ path=ARGV[0]
 @new_content=ARGV[2]
 
 def file_substitute file_path
-	file=File.new file_path,"r"
-	if !file
-	    puts "Failed to read file "+file_path
-		exit
+	success=Rubisc::FileUtil::process_file(file_path) do |content|
+		pattern=content.match /#{@old_content}/
+		if !pattern
+			puts "No matching found."
+		end
+		content=content.gsub /#{@old_content}/,@new_content
 	end
-	content=""
-	file.each do |line|
-        content<<line
-  	end
-	pattern=content.match /#{@old_content}/
-	if !pattern
-		puts "No matching found."
-		file.close
-		exit
+	if !success
+		puts 'Failed to process file '+file_path+'.'
 	end
-  	content=content.gsub(/#{@old_content}/,@new_content)
-	file.close
-	
-	file=File.new file_path,"w"
-	if !file
-	    puts "Failed to write file "+file_path
-		exit
-	end
-	file.write content
-	file.close
 end
 
 def dir_substitute path
