@@ -3,7 +3,7 @@
 require File.join(File.dirname(__FILE__), '..', 'lib','fileutil')
 
 unless ARGV[0] and ARGV[1] and ARGV[2]
-    puts "Usage: substitute <path> <old_content> <new_content>"
+    puts "Usage: substitute <path> <old_content_regex> <new_content>"
     puts "Example: substitute mydir/ hello hey"
     exit
 end
