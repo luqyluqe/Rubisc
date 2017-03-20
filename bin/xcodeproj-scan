@@ -3,8 +3,8 @@
 require File.join(File.dirname(__FILE__), '..', 'lib','fileutil')
 
 unless ARGV[0] and ARGV[1]
-    puts "Usage: xcodeproj_scan <path_to_xcodeproj> <project_directory> <file_extension>"
-    puts "Example: xcodeproj_scan /Users/rubisc/Proj/Proj.xcodeproj /Users/rubisc/Proj xib"
+    puts "Usage: xcodeproj-scan <path_to_xcodeproj> <project_directory> <file_extension>"
+    puts "Example: xcodeproj-scan /Users/rubisc/Proj/Proj.xcodeproj /Users/rubisc/Proj xib"
     exit
 end
 unless File.exist? ARGV[0]
