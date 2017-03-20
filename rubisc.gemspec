@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name='rubisc'
-	s.version='0.2.0'
+	s.version='0.2.1'
 	s.date='2017-03-04'
 	s.licenses=['MIT']
 	s.summary='Wicked cool ruby scripts'
@@ -9,5 +9,6 @@ Gem::Specification.new do |s|
 	s.email='luqy.luqe@gmail.com'
 	s.files=['rubisc.rb','bin/substitute','lib/fileutil.rb']
 	s.executables<<'substitute'
+	s.executables<<'xcodeproj_scan'
 	s.homepage='https://github.com/luqyluqe/Rubisc'
 end
