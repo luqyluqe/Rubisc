@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 module Rubisc
 	module FileUtil
-		def self.process_file file_path
+		def self.process_file file_path,write
 			return true unless block_given?
 			if !File.file? file_path
 				puts "Not a file: "+file_path
@@ -18,6 +18,7 @@ module Rubisc
 			end
 			content=yield content
 			file.close
+			return true unless write
 			file=File.new file_path,"w"
 			if !file
 				puts "Failed to write file "+file_path

@@ -18,7 +18,7 @@ path=ARGV[0]
 @new_content=ARGV[2]
 
 def file_substitute file_path
-	success=Rubisc::FileUtil::process_file(file_path) do |content|
+	success=Rubisc::FileUtil::process_file file_path,true do |content|
 		pattern=content.match /#{@old_content}/
 		if !pattern
 			puts "No matching found."
