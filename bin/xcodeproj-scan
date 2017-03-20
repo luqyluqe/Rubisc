@@ -37,7 +37,7 @@ def scan pbx,dir,suffix
 			else
 				return if ['.DS_Store','Contents.json','project.pbxproj'].include? filename or filename.match /.*\.(xcworkspacedata|xcuserstate|xcscheme|xcbkptlist|md)/
 			end
-			puts "#{filename} not used" unless pbx.match filename
+			puts "#{filename} not used" unless pbx.match /isa.*=.*PBXBuildFile[^\}]*#{filename}/
         end
     end
 end
