@@ -33,11 +33,12 @@ def scan pbx,dir,suffix
 			match =dir.match /\/([^\/]*$)/
             filename=match[1]
 			if suffix
-				return unless filename.match suffix
+				return unless filename.match /\.#{suffix}$/
 			else
-				return if ['.DS_Store','Contents.json','project.pbxproj'].include? filename or filename.match /.*\.(xcworkspacedata|xcuserstate|xcscheme|xcbkptlist|md)/
+				return if ['.DS_Store','Contents.json','project.pbxproj'].include? filename or filename.match /.*\.(xcworkspacedata|xcuserstate|xcscheme|xcbkptlist|md|h|hpp|png|jpg|plist|strings|cer|mp3)$/
 			end
-			puts "#{filename} not used" unless pbx.match /isa.*=.*PBXBuildFile[^\}]*#{filename}/
+			puts "#{filename} not referenced by the project" unless pbx.match filename
+			puts "#{filename} not included in any target" unless pbx.match /isa.*=.*PBXBuildFile[^\}]*#{filename}/
         end
     end
 end
