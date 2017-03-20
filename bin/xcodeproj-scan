@@ -3,12 +3,12 @@
 require File.join(File.dirname(__FILE__), '..', 'lib','fileutil')
 
 unless ARGV[0] and ARGV[1]
-    puts "Usage: xcodeproj_scan <path_to_xcodeproj> <project_directory>"
-    puts "Example: xcodeproj_scan /Users/rubisc/Proj/Proj.xcodeproj /Users/rubisc/Proj"
+    puts "Usage: xcodeproj_scan <path_to_xcodeproj> <project_directory> <file_extension>"
+    puts "Example: xcodeproj_scan /Users/rubisc/Proj/Proj.xcodeproj /Users/rubisc/Proj xib"
     exit
 end
 unless File.exist? ARGV[0]
-    puts "#{ARGV[0]} does not exist."
+	puts "#{ARGV[0]} does not exist."
     puts "Please provide the path to .xcodeproj file."
     exit
 end
@@ -19,24 +19,29 @@ end
 
 pbxproj="#{ARGV[0]}/project.pbxproj"
 projdir=ARGV[1]
+suffix=ARGV[2]
 
-def scan pbx,dir
+def scan pbx,dir,suffix
     if dir!="." and dir!=".." and
         if File.directory?(dir)
             Dir.entries(dir).each do |sub|
                 if sub!="." and sub!=".."
-                    scan pbx,"#{dir}/#{sub}"
+                    scan pbx,"#{dir}/#{sub}",suffix
                 end
             end
         else
 			match =dir.match /\/([^\/]*$)/
             filename=match[1]
-			return if ['.DS_Store','Contents.json','project.pbxproj'].include? filename or filename.match /.*\.(xcworkspacedata|xcuserstate|xcscheme|xcbkptlist|md)/
+			if suffix
+				return unless filename.match suffix
+			else
+				return if ['.DS_Store','Contents.json','project.pbxproj'].include? filename or filename.match /.*\.(xcworkspacedata|xcuserstate|xcscheme|xcbkptlist|md)/
+			end
 			puts "#{filename} not used" unless pbx.match filename
         end
     end
 end
 
 Rubisc::FileUtil::process_file pbxproj,false do |content|
-	scan content,projdir
+	scan content,projdir,suffix
 end
