@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name='rubisc'
-	s.version='0.2.6'
+	s.version='0.2.7'
 	s.date='2017-03-21'
 	s.licenses=['MIT']
 	s.summary='Wicked cool ruby scripts'
@@ -11,5 +11,6 @@ Gem::Specification.new do |s|
 	s.executables<<'substitute'
 	s.executables<<'xcodeproj-scan'
 	s.executables<<'pod-publish'
+	s.executables<<'pod-publish.sh'
 	s.homepage='https://github.com/luqyluqe/Rubisc'
 end
