@@ -39,12 +39,36 @@ module Rubisc
 			end
 		end
 
+		def contains_pattern? path,pattern
+			contains=false
+			if path!="." and path!=".."
+                if File.directory?(path)
+                    Dir.entries(path).each do |sub|
+                        if sub!="." and sub!=".."
+                            contains=contains_pattern? "#{path}/#{sub}",pattern
+                        end
+                    end
+                else
+                    contains=file_contains_pattern? path,pattern
+                end
+            end
+			contains
+		end
+
+		def file_contains_pattern? path,pattern
+			match=nil
+			process_file path,false do |content|
+				match=content.match /#{pattern}/
+			end
+			match!=nil
+		end
+
 		def substitute path,old_content,new_content
 			if path!="." and path!=".."
 				if File.directory?(path)
 					Dir.entries(path).each do |sub|
 						if sub!="." and sub!=".."
-							dir_substitute "#{path}/#{sub}"
+							substitute "#{path}/#{sub}",old_content,new_content
 						end
 					end
 				else
