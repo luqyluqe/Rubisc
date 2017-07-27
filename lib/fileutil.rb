@@ -29,6 +29,20 @@ module Rubisc
 			return true
 		end
 
+		def substitute path,old_content,new_content
+			if path!="." and path!=".."
+				if File.directory?(path)
+					Dir.entries(path).each do |sub|
+						if sub!="." and sub!=".."
+							substitute "#{path}/#{sub}",old_content,new_content
+						end
+					end
+				else
+					file_substitute path,old_content,new_content
+				end
+			end
+		end
+
 		def file_substitute file_path,pattern,new_content
 			process_file file_path,true do |content|
 				matches=content.match /#{pattern}/
@@ -61,20 +75,6 @@ module Rubisc
 				matches=content.match /#{pattern}/
 			end
 			matches!=nil
-		end
-
-		def substitute path,old_content,new_content
-			if path!="." and path!=".."
-				if File.directory?(path)
-					Dir.entries(path).each do |sub|
-						if sub!="." and sub!=".."
-							substitute "#{path}/#{sub}",old_content,new_content
-						end
-					end
-				else
-					file_substitute path,old_content,new_content
-				end
-			end
 		end
 	end
 end

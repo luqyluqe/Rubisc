@@ -2,11 +2,12 @@
 
 require File.join(File.dirname(__FILE__), '..', 'lib','fileutil')
 
-unless ARGV[0] and ARGV[1] and ARGV[2]
-    puts "Usage: substitute <path> <old_content_regex> <new_content>"
-    puts "Example: substitute mydir/ hello hey"
+unless ARGV[0] and ARGV[1]
+    puts "Usage: contains? <path> <regex>"
+    puts "Example: contains? mydir/ hello"
     exit
 end
+
 unless File.exist? ARGV[0]
     puts "#{ARGV[0]} does not exist."
     puts "Please provide the path to the file or directory to process."
@@ -14,7 +15,7 @@ unless File.exist? ARGV[0]
 end
 
 path=ARGV[0]
-old_content=ARGV[1]
-new_content=ARGV[2]
+pattern=ARGV[1]
 
-Rubisc::FileUtil::substitute path,old_content,new_content
+contains=Rubisc::FileUtil::contains_pattern? path,pattern
+raise "Assersion failure." unless contains
