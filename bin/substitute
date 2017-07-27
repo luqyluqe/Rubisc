@@ -17,31 +17,4 @@ path=ARGV[0]
 @old_content=ARGV[1]
 @new_content=ARGV[2]
 
-def file_substitute file_path
-	success=Rubisc::FileUtil::process_file file_path,true do |content|
-		pattern=content.match /#{@old_content}/
-		if !pattern
-			puts "No matching found."
-		end
-		content=content.gsub /#{@old_content}/,@new_content
-	end
-	if !success
-		puts 'Failed to process file '+file_path+'.'
-	end
-end
-
-def dir_substitute path
-	if path!="." and path!=".."
-		if File.directory?(path)
-			Dir.entries(path).each do |sub|
-				if sub!="." and sub!=".."
-					dir_substitute "#{path}/#{sub}"
-				end
-			end
-		else
-			file_substitute path
-		end
-	end
-end
-
-dir_substitute path
+Rubisc::FileUtil::substitute path,@old_content,@new_content
