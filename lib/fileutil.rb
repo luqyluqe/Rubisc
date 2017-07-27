@@ -29,13 +29,13 @@ module Rubisc
 			return true
 		end
 
-		def file_substitute file_path,old_content,new_content
+		def file_substitute file_path,pattern,new_content
 			process_file file_path,true do |content|
-				pattern=content.match /#{old_content}/
-				if !pattern
+				matches=content.match /#{pattern}/
+				if !matches
 					puts "No matching found."
 				end
-				content=content.gsub /#{old_content}/,new_content
+				content=content.gsub /#{pattern}/,new_content
 			end
 		end
 
@@ -56,11 +56,11 @@ module Rubisc
 		end
 
 		def file_contains_pattern? path,pattern
-			match=nil
+			matches=nil
 			process_file path,false do |content|
-				match=content.match /#{pattern}/
+				matches=content.match /#{pattern}/
 			end
-			match!=nil
+			matches!=nil
 		end
 
 		def substitute path,old_content,new_content
