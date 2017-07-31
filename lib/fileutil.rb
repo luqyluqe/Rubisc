@@ -29,7 +29,7 @@ module Rubisc
 			return true
 		end
 
-		def substitute path,old_content,new_content
+		def self.substitute path,old_content,new_content
 			if path!="." and path!=".."
 				if File.directory?(path)
 					Dir.entries(path).each do |sub|
@@ -43,7 +43,7 @@ module Rubisc
 			end
 		end
 
-		def file_substitute file_path,pattern,new_content
+		def self.file_substitute file_path,pattern,new_content
 			process_file file_path,true do |content|
 				matches=content.match /#{pattern}/
 				if !matches
@@ -53,7 +53,7 @@ module Rubisc
 			end
 		end
 
-		def contains_pattern? path,pattern
+		def self.contains_pattern? path,pattern
 			contains=false
 			if path!="." and path!=".."
                 if File.directory?(path)
@@ -69,7 +69,7 @@ module Rubisc
 			contains
 		end
 
-		def file_contains_pattern? path,pattern
+		def self.file_contains_pattern? path,pattern
 			matches=nil
 			process_file path,false do |content|
 				matches=content.match /#{pattern}/
