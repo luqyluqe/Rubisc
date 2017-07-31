@@ -3,8 +3,8 @@
 require File.join(File.dirname(__FILE__), '..', 'lib','fileutil')
 
 unless ARGV[0] and ARGV[1]
-    puts "Usage: contains? <path> <regex>"
-    puts "Example: contains? mydir/ hello"
+    puts "Usage: assert-contains <path> <regex>"
+    puts "Example: assert-contains mydir/ hello"
     exit
 end
 
