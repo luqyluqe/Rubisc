@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
 	s.name='rubisc'
 	s.version='0.3.0'
-	s.date='2017-07-28'
+	s.date='2017-07-31'
 	s.licenses=['MIT']
 	s.summary='Wicked cool ruby scripts'
 	s.description='Wicked cool ruby scripts'
