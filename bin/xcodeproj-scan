@@ -15,6 +15,7 @@ end
 unless File.exist? ARGV[1]
 	puts "#{ARGV[1]} does not exist."
 	puts "Please provide the project directory."
+	exit
 end
 
 pbxproj="#{ARGV[0]}/project.pbxproj"
