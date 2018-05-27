@@ -45,10 +45,6 @@ module Rubisc
 
 		def self.file_substitute file_path,pattern,new_content
 			process_file file_path,true do |content|
-				matches=content.match /#{pattern}/
-				if !matches
-					puts "No matching found."
-				end
 				content=content.gsub /#{pattern}/,new_content
 			end
 		end
