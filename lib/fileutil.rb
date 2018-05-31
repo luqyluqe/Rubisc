@@ -30,16 +30,8 @@ module Rubisc
 		end
 
 		def self.substitute path,old_content,new_content
-			if path!="." and path!=".."
-				if File.directory?(path)
-					Dir.entries(path).each do |sub|
-						if sub!="." and sub!=".."
-							substitute "#{path}/#{sub}",old_content,new_content
-						end
-					end
-				else
-					file_substitute path,old_content,new_content
-				end
+			iterate_files path do |file|
+				file_substitute path,old_content,new_content
 			end
 		end
 
@@ -50,19 +42,11 @@ module Rubisc
 		end
 
 		def self.contains_pattern? path,pattern
-			contains=false
-			if path!="." and path!=".."
-                if File.directory?(path)
-                    Dir.entries(path).each do |sub|
-                        if sub!="." and sub!=".."
-                            contains=contains_pattern? "#{path}/#{sub}",pattern
-                        end
-                    end
-                else
-                    contains=file_contains_pattern? path,pattern
-                end
-            end
-			contains
+			iterate_files path do |file|
+				contains=file_contains_pattern file,pattern
+				return true if contains
+			end
+			false
 		end
 
 		def self.file_contains_pattern? path,pattern
@@ -71,6 +55,18 @@ module Rubisc
 				matches=content.match /#{pattern}/
 			end
 			matches!=nil
+		end
+
+		def self.iterate_files path
+			if File.directory?(path)
+                Dir.entries(path).each do |sub|
+                    if sub!="." and sub!=".."
+                        iterate_files "#{path}/#{sub}"
+                    end
+                end
+            else
+            	yield path
+            end
 		end
 	end
 end
