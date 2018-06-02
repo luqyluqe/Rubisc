@@ -57,11 +57,11 @@ module Rubisc
 			matches!=nil
 		end
 
-		def self.iterate_files path
+		def self.iterate_files path,&block
 			if File.directory?(path)
                 Dir.entries(path).each do |sub|
                     if sub!="." and sub!=".."
-                        iterate_files "#{path}/#{sub}"
+                        iterate_files "#{path}/#{sub}",&block
                     end
                 end
             else
